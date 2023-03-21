@@ -20,12 +20,28 @@ export class UserService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    try {
+      const result = await this.prisma.user.findFirst({
+        where: {
+          id: id
+        }
+      });
+      return result;
+    } catch (error) {
+      throw error
+    };
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      return await this.prisma.user.update({
+        where: { id },
+        data: updateUserDto,
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 
   remove(id: number) {

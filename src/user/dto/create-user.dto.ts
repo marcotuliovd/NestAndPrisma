@@ -1,1 +1,9 @@
-export class CreateUserDto {}
+export class CreateUserDto {
+  email: string;
+
+  officialName: string;
+
+  name?: string;
+
+  post: number[]
+}
