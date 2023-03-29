@@ -7,8 +7,17 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(@Inject(PrismaService) private prisma:PrismaService){}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const result = await this.prisma.user.create({
+        data: { 
+          ...createUserDto
+        }
+      });
+      return result;
+    } catch (error) {
+      throw error
+    };
   }
 
   async findAll() {
@@ -44,7 +53,13 @@ export class UserService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    try {
+      return await this.prisma.user.delete({
+        where: { id }
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 }
